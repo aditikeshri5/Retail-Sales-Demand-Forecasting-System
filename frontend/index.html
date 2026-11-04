@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>RetailPulse AI | Demand Intelligence</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <a class="brand" href="#">
+            <span class="logo">R</span>
+
+            <span>
+                <b>RetailPulse</b>
+                <small>AI · DEMAND INTELLIGENCE</small>
+            </span>
+        </a>
+
+        <p class="nav-label">WORKSPACE</p>
+
+        <nav>
+            <a class="active" href="#overview">
+                ◫ &nbsp; Overview
+            </a>
+
+            <a href="#forecast">
+                ⌁ &nbsp; Demand forecast
+            </a>
+
+            <a href="#performance">
+                ▥ &nbsp; Model performance
+            </a>
+        </nav>
+
+        <div class="side-bottom">
+
+            <div class="connection">
+
+                <b>
+                    <i id="dot"></i>
+                    API connection
+                </b>
+
+                <p id="api-status">
+                    Checking backend…
+                </p>
+
+                <button id="retry">
+                    Check connection ↗
+                </button>
+
+            </div>
+
+            <div class="user">
+
+                <span>RP</span>
+
+                <div>
+                    <b>Retail Analytics</b>
+                    <small>Forecast workspace</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <header>
+
+            <span>
+                Workspace <em>/</em> <b>Overview</b>
+            </span>
+
+            <span class="live">
+                ● LIVE WORKSPACE
+            </span>
+
+        </header>
+
+
+        <!-- HERO SECTION -->
+        <section id="overview" class="hero">
+
+            <div>
+
+                <label>RETAIL DEMAND INTELLIGENCE</label>
+
+                <h1>
+                    Make your next move<br>
+                    <strong>before demand happens.</strong>
+                </h1>
+
+                <p>
+                    Explore sales patterns, generate demand forecasts,
+                    and compare predictive models from one workspace.
+                </p>
+
+            </div>
+
+            <div class="orb">
+                <span>↗</span>
+            </div>
+
+        </section>
+
+
+        <!-- WORKSPACE SNAPSHOT -->
+        <div class="section-head">
+
+            <div>
+
+                <h2>Workspace snapshot</h2>
+
+                <p>
+                    Live information returned by your forecasting API.
+                </p>
+
+            </div>
+
+            <small id="updated">
+                Not refreshed yet
+            </small>
+
+        </div>
+
+
+        <!-- KPI CARDS -->
+        <div class="kpis">
+
+            <article>
+
+                <small>Total historical records</small>
+
+                <b id="total">—</b>
+
+                <em>Complete dataset · 2013–2025</em>
+
+            </article>
+
+
+            <article>
+
+                <small>Forecasting models</small>
+
+                <b id="models">3</b>
+
+                <em>Random Forest · ARIMA · SARIMA</em>
+
+            </article>
+
+
+            <article>
+
+                <small>Dataset coverage</small>
+
+                <b id="date-range">2013–2025</b>
+
+                <em>Historical sales period</em>
+
+            </article>
+
+
+            <article>
+
+                <small>Backend status</small>
+
+                <b id="status">Checking</b>
+
+                <em>FastAPI · localhost:8000</em>
+
+            </article>
+
+        </div>
+
+
+        <!-- DATASET DETAILS -->
+        <div class="section-head">
+
+            <div>
+                <h2>Dataset composition</h2>
+
+                <p>
+                    Overview of the retail dataset used for forecasting.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="kpis">
+
+            <article>
+
+                <small>Stores</small>
+
+                <b id="store-count">—</b>
+
+                <em>Retail locations</em>
+
+            </article>
+
+
+            <article>
+
+                <small>Products</small>
+
+                <b id="item-count">—</b>
+
+                <em>Unique items</em>
+
+            </article>
+
+        </div>
+
+
+        <!-- FORECAST SECTION -->
+        <section id="forecast" class="forecast">
+
+            <div class="section-head">
+
+                <div>
+
+                    <label>PREDICTIVE WORKBENCH</label>
+
+                    <h2>Generate a demand forecast</h2>
+
+                    <p>
+                        Choose a model, set your forecast horizon,
+                        and run a live prediction through FastAPI.
+                    </p>
+
+                </div>
+
+                <small>01 / FORECAST</small>
+
+            </div>
+
+
+            <div class="work-grid">
+
+
+                <!-- FORECAST CONFIGURATION -->
+                <div class="panel">
+
+                    <h3>Forecast configuration</h3>
+
+                    <p class="sub">
+                        Configure the prediction request
+                    </p>
+
+
+                    <form id="form">
+
+                        <label for="model">
+                            Forecasting model
+                        </label>
+
+                        <select id="model">
+
+                            <option value="random_forest">
+                                Random Forest
+                            </option>
+
+                            <option value="arima">
+                                ARIMA
+                            </option>
+
+                            <option value="sarima">
+                                SARIMA
+                            </option>
+
+                        </select>
+
+
+                        <p id="model-note" class="hint">
+                            Machine learning model using lag
+                            and rolling demand features.
+                        </p>
+
+
+                        <label>Forecast horizon</label>
+
+
+                        <div class="horizons">
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="horizon"
+                                    value="7"
+                                >
+
+                                <span>
+                                    7 <small>days</small>
+                                </span>
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="horizon"
+                                    value="15"
+                                >
+
+                                <span>
+                                    15 <small>days</small>
+                                </span>
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="radio"
+                                    name="horizon"
+                                    value="30"
+                                    checked
+                                >
+
+                                <span>
+                                    30 <small>days</small>
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <!-- RANDOM FOREST INPUTS -->
+                        <div id="rf-fields" class="rf-fields">
+
+                            <div>
+
+                                <label for="store">
+                                    Store ID <small>optional</small>
+                                </label>
+
+                                <input
+                                    id="store"
+                                    type="number"
+                                    min="1"
+                                    max="10"
+                                    placeholder="e.g. 1"
+                                >
+
+                            </div>
+
+
+                            <div>
+
+                                <label for="item">
+                                    Item ID <small>optional</small>
+                                </label>
+
+                                <input
+                                    id="item"
+                                    type="number"
+                                    min="1"
+                                    max="50"
+                                    placeholder="e.g. 10"
+                                >
+
+                            </div>
+
+
+                            <p>
+                                Leave both blank for the backend's
+                                default forecasting scope.
+                                Sent only to Random Forest.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            id="generate"
+                            class="primary"
+                            type="submit"
+                        >
+                            Generate forecast <b>↗</b>
+                        </button>
+
+
+                        <p class="footnote">
+                            ◆ Results are generated by your locally
+                            running model API.
+                        </p>
+
+                    </form>
+
+                </div>
+
+
+
+                <!-- FORECAST RESULTS -->
+                <div class="panel result">
+
+
+                    <div class="result-head">
+
+                        <div>
+
+                            <h3>Forecast results</h3>
+
+                            <p class="sub" id="result-sub">
+                                Your prediction will appear here
+                            </p>
+
+                        </div>
+
+                        <span id="result-status">
+                            AWAITING INPUT
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- EMPTY STATE -->
+                    <div id="empty" class="empty">
+
+                        <div class="bars">
+                            ⌁
+                            <i></i>
+                            <i></i>
+                            <i></i>
+                        </div>
+
+                        <b>Ready when you are</b>
+
+                        <p>
+                            Select your model and forecast horizon,
+                            then generate a prediction to see
+                            the results here.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- FORECAST OUTPUT -->
+                    <div id="output" class="hide">
+
+
+                        <!-- SUMMARY CARDS -->
+                        <div class="summary">
+
+                            <div>
+
+                                <small>Predicted total</small>
+
+                                <b id="sum">—</b>
+
+                            </div>
+
+
+                            <div>
+
+                                <small>Daily average</small>
+
+                                <b id="avg">—</b>
+
+                            </div>
+
+
+                            <div>
+
+                                <small>Peak demand</small>
+
+                                <b id="peak">—</b>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- CHART -->
+                        <div class="chart">
+
+                            <canvas id="chart"></canvas>
+
+                        </div>
+
+
+
+                        <!-- DAILY FORECAST TABLE -->
+                        <div class="table-title">
+
+                            <b>Daily forecast</b>
+
+                            <button id="csv">
+                                ↓ Export CSV
+                            </button>
+
+                        </div>
+
+
+                        <div class="table-wrap">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Predicted sales</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="rows"></tbody>
+
+                            </table>
+
+                        </div>
+
+
+                        <p id="note" class="hint"></p>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ERROR MESSAGE -->
+            <div id="error" class="error hide"></div>
+
+        </section>
+
+
+
+        <!-- MODEL PERFORMANCE -->
+        <section id="performance" class="performance">
+
+
+            <div class="section-head">
+
+                <div>
+
+                    <label>MODEL EVALUATION</label>
+
+                    <h2>Understand model performance</h2>
+
+                    <p>
+                        Validation metrics retrieved from your backend.
+                    </p>
+
+                </div>
+
+
+                <button id="refresh">
+                    ↻ Refresh metrics
+                </button>
+
+            </div>
+
+
+
+            <div class="panel">
+
+                <h3>Model comparison</h3>
+
+                <p class="sub">
+                    Lower MAE and RMSE indicate smaller forecast errors.
+                </p>
+
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Model</th>
+                                <th>MAE</th>
+                                <th>RMSE</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="metrics">
+
+                            <tr>
+                                <td colspan="4">
+                                    Loading metrics from API…
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+        <footer>
+
+            © 2026 RetailPulse AI
+
+            <span>
+                Intelligent Retail Sales & Demand Forecasting System
+            </span>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script src="js/app.js"></script>
+
+</body>
+</html>
